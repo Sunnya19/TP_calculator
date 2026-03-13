@@ -50,12 +50,12 @@ int main(int argc, char* argv[]) {
   double result;
   try {
     result = Calculate(a, b, op);
+    std::cout << result << std::endl;
   }
   catch (std::invalid_argument &e) {
     std::cout << e.what() << std::endl;
-    Hint();
     return 1;
   }
-
+  
   return 0;
 }
