@@ -1,12 +1,22 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 project(TP_calculator)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(SOURCES src/main.cpp src/calc.cpp)
+add_library(calc_lib src/calc.cpp)
+target_include_directories(calc_lib PUBLIC include)
 
-set(HEADERS include/calc.hpp)
+add_executable(calc src/main.cpp)
+target_link_libraries(calc PRIVATE calc_lib)
 
-add_executable(calc ${SOURCES} ${HEADERS})
-target_include_directories(calc PRIVATE include)
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
+add_subdirectory(tests)
